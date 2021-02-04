@@ -1,9 +1,12 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.js',  // 入口
+  entry: {
+    app: './src/index.js',
+    print: './src/pirnt.js',
+  },
   output: {     // 输出
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
 };
