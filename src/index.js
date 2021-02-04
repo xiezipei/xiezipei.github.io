@@ -1,18 +1,14 @@
-import _ from 'lodash';
-import printMe from './pirnt';
+async function getComponent() {
+	try {
+		const { default: _ } = await import('lodash');
+		const element = document.createElement('div');
+		element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+		return element;
+	} catch (error) {
+		return 'An error occured while loading the component';
+	}
+}
 
-function component() {
-    const element = document.createElement('div');
-    const btn = document.createElement('button');
-
-    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-
-    btn.innerHTML = '点击这里，然后查看 console!';
-    btn.onclick = printMe;
-
-    element.appendChild(btn);
-
-    return element;
-  }
-  
-  document.body.appendChild(component());
+getComponent().then(component => {
+	document.body.appendChild(component);
+});

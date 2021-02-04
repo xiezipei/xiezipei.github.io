@@ -3,17 +3,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
+
     mode: 'development',    // 开发模式
 
     entry: {
-        // 在入口处理重复依赖，或者使用下面的`SplitChunksPlugin`
-        // index: { import: './src/index.js', dependOn: 'shared' },
-        // another: { import: './src/another-module.js', dependOn: 'shared' },
-        // shared: 'lodash',
-
-        // 在入口不处理重复依赖
         index: './src/index.js',
-        another: './src/another-module.js'
     },
 
     devtool: 'inline-source-map',   // 启用sourcemap，请注意不要在生产环境使用！！！
@@ -36,9 +30,5 @@ module.exports = {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist'),
     },
-    optimization: {
-        splitChunks: {
-            chunks: 'all',
-        }
-    }
+
 };
