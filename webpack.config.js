@@ -22,13 +22,27 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),   // 清理`/dist`文件夹
         new HtmlWebpackPlugin({     // 动态生成`index.html`文件
-            title: '管理输出',
+            title: 'Caching',
         })
     ],
 
     output: {
-        filename: '[name].bundle.js',
+        filename: '[name].[contenthash].js',
         path: path.resolve(__dirname, 'dist'),
     },
+
+    optimization: {
+        moduleIds: 'deterministic',
+        runtimeChunk: 'single',
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all',
+                }
+            }
+        }
+    }
 
 };
