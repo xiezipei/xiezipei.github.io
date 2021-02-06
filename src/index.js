@@ -1,29 +1,21 @@
-import Print from './print';
+import _ from 'lodash';
 
-async function getComponent() {
-	try {
-		const { default: _ } = await import('lodash');
-		const element = document.createElement('div');
-		element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+function component() {
+	const element = document.createElement('div');
+	const button = document.createElement('button');
+	const br = document.createElement('br');
 
-		const btn = document.createElement('button');
-		btn.innerHTML = 'Click me and check console!';
-		btn.onclick = Print.bind(null, 'Hello webpack!');
-		element.appendChild(btn);
+	button.innerHTML = 'Click me and look at the console!';
+	element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+	element.appendChild(br);
+	element.appendChild(button);
 
-		return element;
-	} catch (error) {
-		return 'An error occured while loading the component';
-	}
-}
-
-getComponent().then(component => {
-	document.body.appendChild(component);
-});
-
-if (module.hot) {
-	module.hot.accept('./print.js', function() {
-		console.log('Accepting the update printMe module!');
-		printMe();
+	button.onclick = e => import(/* webpackChunkName: "print" */ './print').then(module => {
+		const print = module.default;
+		print();
 	});
+
+	return element;
 }
+
+document.body.appendChild(component());
